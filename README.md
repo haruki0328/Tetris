@@ -2,9 +2,6 @@
 
 Java (Swing) を用いて、MVC (Model-View-Controller) アーキテクチャに基づき実装したテトリスです。
 
-![Java](https://img.shields.io/badge/Java-21-orange)
-![Swing](https://img.shields.io/badge/GUI-Swing-blue)
-
 ## 特徴
 
 - **MVCアーキテクチャ**: Model / View / Controller を明確に分離し、責務ごとにパッケージを分割
