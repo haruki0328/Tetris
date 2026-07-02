@@ -5,7 +5,6 @@ package com.tetris.model;
 public final class WallKickData {
 
     private WallKickData() {
-        throw new AssertionError("WallKickData クラスはインスタンス化できません。");
     }
 
     private static final int[][] STANDARD_KICKS = {

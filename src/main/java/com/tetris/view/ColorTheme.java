@@ -6,7 +6,6 @@ import java.awt.Font;
 public final class ColorTheme {
 
     private ColorTheme() {
-        throw new AssertionError("ColorTheme クラスはインスタンス化できません。");
     }
 
     public static final Color SIDE_PANEL_BACKGROUND = new Color(30, 30, 30);

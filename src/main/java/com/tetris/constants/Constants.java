@@ -5,7 +5,6 @@ import java.awt.Color;
 public final class Constants {
 
     private Constants() {
-        throw new AssertionError("Constants クラスはインスタンス化できません。");
     }
 
     public static final int BOARD_WIDTH = 10;
