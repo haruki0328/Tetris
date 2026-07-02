@@ -11,11 +11,6 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 
-/**
- * スコア・レベル・消去ライン数・NEXT（次のテトリミノ）を表示するサイドパネル。
- *
- * <p>Boardの描画とは責務を分離し、このクラスはゲーム進行状況の可視化のみを担う。</p>
- */
 public final class SidePanel extends JPanel {
 
     private static final int NEXT_BOX_SIZE = 4 * Constants.CELL_SIZE;
@@ -24,12 +19,6 @@ public final class SidePanel extends JPanel {
     private final GameController controller;
     private final GameState gameState;
 
-    /**
-     * サイドパネルを生成する。
-     *
-     * @param controller 次のテトリミノを参照するためのController
-     * @param gameState  スコア・レベル等を参照するためのゲーム状態
-     */
     public SidePanel(GameController controller, GameState gameState) {
         this.controller = controller;
         this.gameState = gameState;
@@ -56,15 +45,6 @@ public final class SidePanel extends JPanel {
         drawPiecePreview(g2d, "NEXT", controller.getNextTetrominoType(), true, y);
     }
 
-    /**
-     * ラベルと値のペアを描画する。
-     *
-     * @param g2d   描画コンテキスト
-     * @param label ラベル文字列（例: "SCORE"）
-     * @param value 表示する値
-     * @param y     描画開始のy座標
-     * @return 次の要素を描画すべきy座標
-     */
     private int drawLabel(Graphics2D g2d, String label, String value, int y) {
         g2d.setFont(ColorTheme.FONT_HEADING);
         g2d.setColor(ColorTheme.TEXT_ACCENT);
@@ -77,16 +57,6 @@ public final class SidePanel extends JPanel {
         return y + 60;
     }
 
-    /**
-     * テトリミノのプレビュー（NEXT または HOLD）を描画する。
-     *
-     * @param g2d     描画コンテキスト
-     * @param label   見出し文字列（"NEXT" または "HOLD"）
-     * @param type    表示するテトリミノ種別。何も表示しない場合は {@code null}
-     * @param enabled 使用可能かどうか。{@code false} の場合はミノを暗く（半透明に）表示する
-     * @param y       描画開始のy座標
-     * @return 次の要素を描画すべきy座標
-     */
     private int drawPiecePreview(Graphics2D g2d, String label, TetrominoType type, boolean enabled, int y) {
         g2d.setFont(ColorTheme.FONT_HEADING);
         g2d.setColor(ColorTheme.TEXT_ACCENT);
@@ -110,12 +80,6 @@ public final class SidePanel extends JPanel {
         return boxTop + NEXT_BOX_SIZE;
     }
 
-    /**
-     * 使用不可（ホールド済み）を表現するため、指定色を半透明に変換する。
-     *
-     * @param color 元の色
-     * @return 半透明化した色
-     */
     private Color dim(Color color) {
         return new Color(color.getRed(), color.getGreen(), color.getBlue(), 90);
     }

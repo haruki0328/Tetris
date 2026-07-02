@@ -6,25 +6,8 @@ import javax.swing.Timer;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
-/**
- * キーボード入力を受け付け、{@link GameController} の操作メソッドへ変換するハンドラ。
- *
- * <p>左右移動キーについては、押しっぱなしにした際に一定時間後から高速リピート移動を行う
- * DAS（Delayed Auto Shift）を実装する。回転・ハードドロップは押下の都度1回のみ反応し、
- * ソフトドロップは押下中のみ有効になる。</p>
- *
- * <p>キー割り当て:</p>
- * <ul>
- *   <li>左矢印 / A: 左移動</li>
- *   <li>右矢印 / D: 右移動</li>
- *   <li>下矢印 / S: ソフトドロップ</li>
- *   <li>上矢印 / W: 時計回り回転</li>
- *   <li>Z: 反時計回り回転</li>
- *   <li>スペース: ハードドロップ</li>
- *   <li>P: 一時停止 / 再開</li>
- *   <li>C / Shift: ホールド</li>
- * </ul>
- */
+// 左右移動キーはDAS（Delayed Auto Shift）で、押しっぱなしにすると
+// 一定時間後から高速リピート移動する。回転・ハードドロップは押下ごとに1回のみ反応する。
 public final class KeyInputHandler extends KeyAdapter {
 
     private final GameController controller;
@@ -32,11 +15,6 @@ public final class KeyInputHandler extends KeyAdapter {
     private Timer dasTimer;
     private int dasDirection;
 
-    /**
-     * 指定したControllerに対する操作を行うキー入力ハンドラを生成する。
-     *
-     * @param controller 操作対象のGameController
-     */
     public KeyInputHandler(GameController controller) {
         this.controller = controller;
         this.dasDirection = 0;
@@ -83,7 +61,6 @@ public final class KeyInputHandler extends KeyAdapter {
                 break;
 
             default:
-                // 割り当てのないキーは無視する
                 break;
         }
     }
@@ -111,20 +88,13 @@ public final class KeyInputHandler extends KeyAdapter {
                 break;
 
             default:
-                // 割り当てのないキーは無視する
                 break;
         }
     }
 
-    /**
-     * 左右移動キーが押された際の処理。即座に1マス移動させた上で、
-     * 一定時間押し続けた場合に備えてDASタイマーを起動する。
-     *
-     * @param direction 移動方向（{@code -1}: 左, {@code 1}: 右）
-     */
     private void handleDirectionalKeyPressed(int direction) {
         if (dasDirection == direction) {
-            // 既に同方向のキーリピート処理中であれば何もしない（OSのキーリピートイベント対策）
+            // OSのキーリピートイベントで同方向が連続発火するのを無視する
             return;
         }
 
@@ -137,21 +107,11 @@ public final class KeyInputHandler extends KeyAdapter {
         dasTimer.start();
     }
 
-    /**
-     * DASの初回遅延が経過した後、高速リピート移動を開始する。
-     *
-     * @param direction 移動方向
-     */
     private void startAutoRepeat(int direction) {
         dasTimer = new Timer(Constants.DAS_REPEAT_INTERVAL_MS, e -> moveByDirection(direction));
         dasTimer.start();
     }
 
-    /**
-     * 指定方向にテトリミノを1マス移動させる。
-     *
-     * @param direction 移動方向（{@code -1}: 左, {@code 1}: 右）
-     */
     private void moveByDirection(int direction) {
         if (direction < 0) {
             controller.moveLeft();
@@ -160,9 +120,6 @@ public final class KeyInputHandler extends KeyAdapter {
         }
     }
 
-    /**
-     * DASタイマーを停止し、リピート状態を解除する。
-     */
     private void stopDas() {
         if (dasTimer != null) {
             dasTimer.stop();
